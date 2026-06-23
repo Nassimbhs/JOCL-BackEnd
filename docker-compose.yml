@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+
+  mysql:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+    container_name: jocl-mysql
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - jocl-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jocl-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/jocldb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
+      - JOCL_APP_JWTSECRET=jwtSecret
+      - JOCL_APP_JWTEXPIRATIONMS=86400000
+    networks:
+      - jocl-network
+
+  frontend:
+    build:
+      context: ../JOCL-FrontEnd
+      dockerfile: Dockerfile
+    container_name: jocl-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - jocl-network
+
+volumes:
+  mysql_data:
+
+networks:
+  jocl-network:
+    driver: bridge
