@@ -40,7 +40,7 @@ services:
 
   frontend:
     build:
-      context: ../JOCL-FrontEnd
+      context: /var/jenkins_home/workspace/devopsFront
       dockerfile: Dockerfile
     container_name: jocl-frontend
     ports:
