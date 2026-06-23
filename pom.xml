@@ -92,5 +92,11 @@
 			</plugin>
 		</plugins>
 	</build>
+	<distributionManagement>
+    	<repository>
+        	<id>nexus-releases</id>
+        	<url>http://nexus:8081/repository/jocl-releases/</url>
+    	</repository>
+	</distributionManagement>
 
 </project>
