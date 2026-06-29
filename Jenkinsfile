@@ -3,6 +3,7 @@ pipeline {
     tools {
         jdk 'jdk21'
         maven 'maven3'
+        sonarScanner 'SonarScanner'
     }
     stages {
         stage('Checkout') {
@@ -23,7 +24,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube') {
+                withSonarQubeEnv('SonarQube') { 
                     sh 'mvn clean verify sonar:sonar'
                 }
             }
