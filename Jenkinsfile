@@ -3,7 +3,7 @@ pipeline {
     tools {
         jdk 'jdk21'
         maven 'maven3'
-        sonarScanner 'SonarScanner'
+        
     }
     stages {
         stage('Checkout') {
