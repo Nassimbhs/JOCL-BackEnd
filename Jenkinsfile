@@ -19,6 +19,19 @@ pipeline {
             steps {
                 sh 'mvn clean package -DskipTests'
             }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh 'mvn clean verify sonar:sonar'
+                }
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
         }
         stage('Docker Build') {
             steps {
@@ -79,6 +92,7 @@ EOF
             }
         }
     }
+    
     post {
         success {
             mail to: 'barkia133@gmail.com',
