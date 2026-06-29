@@ -41,21 +41,8 @@ services:
     networks:
       - jocl-network
 
-
   frontend:
     image: eyaabarkiaa/jocl-frontend:latest
-    container_name: jocl-frontend
-    ports:
-      - "4200:80"
-    depends_on:
-      - backend
-    networks:
-      - jocl-network
-
-
-    build:
-      context: C:\Users\mouni\OneDrive\Bureau\stage2\JOCL-FrontEnd
-      dockerfile: Dockerfile
     container_name: jocl-frontend
     ports:
       - "4200:80"
