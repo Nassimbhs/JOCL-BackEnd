@@ -88,7 +88,7 @@ pipeline {
 </settings>
 EOF
                         mvn deploy -DskipTests \
-                        -DaltDeploymentRepository=nexus-releases::http://192.168.137.15:8081/repository/jocl-releases/ \
+                        -DaltDeploymentRepository=nexus-releases::http://192.168.137.201:8081/repository/jocl-releases/ \
                         --settings /tmp/settings.xml
                     '''
                 }
